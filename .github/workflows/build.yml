@@ -23,5 +23,5 @@ jobs:
       - name: Upload plugin JAR
         uses: actions/upload-artifact@v4
         with:
-          name: MoneySMP-0.1.0
-          path: target/money-smp-0.1.0.jar
+          name: MoneySMP-0.2.0
+          path: target/money-smp-0.2.0.jar
