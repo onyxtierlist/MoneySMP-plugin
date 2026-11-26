@@ -19,10 +19,19 @@ public final class MoneySMP extends JavaPlugin {
         getCommand("money").setExecutor(moneyCommand);
         getCommand("money").setTabCompleter(moneyCommand);
 
+        PayCommand payCommand = new PayCommand(economyManager);
+        if (getCommand("pay") == null) {
+            getLogger().severe("The /pay command is missing from plugin.yml. Disabling plugin.");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+        getCommand("pay").setExecutor(payCommand);
+        getCommand("pay").setTabCompleter(payCommand);
+
         getServer().getPluginManager().registerEvents(
                 new PlayerJoinListener(economyManager), this);
 
-        getLogger().info("MoneySMP enabled. Feature 001: Basic Economy.");
+        getLogger().info("MoneySMP enabled. Features 001-002: Basic Economy and Player Payments.");
     }
 
     @Override
