@@ -1,0 +1,1 @@
+# MoneySMP-plugin
