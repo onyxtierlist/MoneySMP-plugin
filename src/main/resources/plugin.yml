@@ -1,5 +1,5 @@
 name: MoneySMP
-version: 0.2.0
+version: 0.3.0
 main: dev.moneysmp.MoneySMP
 api-version: '1.21.11'
 author: Onyx Tier List
@@ -12,6 +12,10 @@ commands:
   pay:
     description: Send money to another online player.
     usage: /pay <player> <amount>
+  eco:
+    description: Manage a player's balance.
+    usage: /eco <give|take|set> <player> <amount>
+    permission: moneysmp.admin
 permissions:
   moneysmp.balance:
     description: Allows a player to view their balance.
@@ -19,3 +23,6 @@ permissions:
   moneysmp.pay:
     description: Allows a player to send money to another player.
     default: true
+  moneysmp.admin:
+    description: Allows access to administrative economy commands.
+    default: op
