@@ -1,0 +1,15 @@
+name: MoneySMP
+version: 0.1.0
+main: dev.moneysmp.MoneySMP
+api-version: '1.21.11'
+author: Onyx Tier List
+description: A gradually expanding Money SMP plugin.
+commands:
+  money:
+    description: View your current balance.
+    usage: /money
+    aliases: [bal, balance]
+permissions:
+  moneysmp.balance:
+    description: Allows a player to view their balance.
+    default: true
