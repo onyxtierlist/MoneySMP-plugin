@@ -34,20 +34,47 @@ public final class EconomyManager {
     }
 
     public synchronized void initialize(Player player) {
-        String path = player.getUniqueId().toString();
-        if (!data.contains(path)) {
-            data.set(path, startingBalanceCents);
-            save();
-        }
+        ensureAccount(player.getUniqueId());
     }
 
     public synchronized long getBalanceCents(UUID uuid) {
+        ensureAccount(uuid);
+        return Math.max(0L, data.getLong(uuid.toString(), startingBalanceCents));
+    }
+
+    /**
+     * Transfers money atomically. Returns false when the sender cannot afford it
+     * or the recipient balance would overflow a long.
+     */
+    public synchronized boolean transfer(UUID sender, UUID recipient, long amountCents) {
+        if (amountCents <= 0 || sender.equals(recipient)) {
+            return false;
+        }
+
+        ensureAccount(sender);
+        ensureAccount(recipient);
+
+        String senderPath = sender.toString();
+        String recipientPath = recipient.toString();
+        long senderBalance = Math.max(0L, data.getLong(senderPath, startingBalanceCents));
+        long recipientBalance = Math.max(0L, data.getLong(recipientPath, startingBalanceCents));
+
+        if (senderBalance < amountCents || recipientBalance > Long.MAX_VALUE - amountCents) {
+            return false;
+        }
+
+        data.set(senderPath, senderBalance - amountCents);
+        data.set(recipientPath, recipientBalance + amountCents);
+        save();
+        return true;
+    }
+
+    private void ensureAccount(UUID uuid) {
         String path = uuid.toString();
         if (!data.contains(path)) {
             data.set(path, startingBalanceCents);
             save();
         }
-        return Math.max(0L, data.getLong(path, startingBalanceCents));
     }
 
     public synchronized void save() {
