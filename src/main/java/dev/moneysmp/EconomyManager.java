@@ -42,6 +42,32 @@ public final class EconomyManager {
         return Math.max(0L, data.getLong(uuid.toString(), startingBalanceCents));
     }
 
+    public synchronized boolean setBalance(UUID uuid, long amountCents) {
+        if (amountCents < 0) return false;
+        ensureAccount(uuid);
+        data.set(uuid.toString(), amountCents);
+        save();
+        return true;
+    }
+
+    public synchronized boolean deposit(UUID uuid, long amountCents) {
+        if (amountCents <= 0) return false;
+        long current = getBalanceCents(uuid);
+        if (current > Long.MAX_VALUE - amountCents) return false;
+        data.set(uuid.toString(), current + amountCents);
+        save();
+        return true;
+    }
+
+    public synchronized boolean withdraw(UUID uuid, long amountCents) {
+        if (amountCents <= 0) return false;
+        long current = getBalanceCents(uuid);
+        if (current < amountCents) return false;
+        data.set(uuid.toString(), current - amountCents);
+        save();
+        return true;
+    }
+
     /**
      * Transfers money atomically. Returns false when the sender cannot afford it
      * or the recipient balance would overflow a long.
