@@ -10,6 +10,16 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - Balances are stored by UUID in `plugins/MoneySMP/balances.yml`.
 - Currency is stored as integer cents to avoid floating-point arithmetic for balances.
 
+## Feature 002 — Player Payments
+
+- `/pay <player> <amount>` sends money to another online player.
+- Player-name tab completion is available.
+- Payments must be greater than $0.00 and support up to two decimal places.
+- Players cannot pay themselves.
+- The sender must have enough funds; failed payments do not change either balance.
+- Both players receive a confirmation message.
+- Transfers are performed atomically by the economy manager and saved immediately.
+
 ## Requirements
 
 - Paper 1.21.11
@@ -24,7 +34,7 @@ Run from the project root:
 mvn clean package
 ```
 
-The plugin JAR will be at `target/money-smp-0.1.0.jar`.
+The plugin JAR will be at `target/money-smp-0.2.0.jar`.
 
 Copy the JAR into your server's `plugins` folder and restart the server.
 
@@ -43,10 +53,13 @@ This value is only assigned to players who do not already have a saved balance. 
 | Command | Description |
 |---|---|
 | `/money` | View your balance |
-| `/bal` | Alias |
-| `/balance` | Alias |
+| `/bal` | Alias for `/money` |
+| `/balance` | Alias for `/money` |
+| `/pay <player> <amount>` | Pay an online player |
 
-Permission: `moneysmp.balance` (default: everyone).
+Permissions:
+- `moneysmp.balance` (default: everyone)
+- `moneysmp.pay` (default: everyone)
 
 ## Development approach
 
