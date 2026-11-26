@@ -1,5 +1,5 @@
 name: MoneySMP
-version: 0.1.0
+version: 0.2.0
 main: dev.moneysmp.MoneySMP
 api-version: '1.21.11'
 author: Onyx Tier List
@@ -9,7 +9,13 @@ commands:
     description: View your current balance.
     usage: /money
     aliases: [bal, balance]
+  pay:
+    description: Send money to another online player.
+    usage: /pay <player> <amount>
 permissions:
   moneysmp.balance:
     description: Allows a player to view their balance.
+    default: true
+  moneysmp.pay:
+    description: Allows a player to send money to another player.
     default: true
