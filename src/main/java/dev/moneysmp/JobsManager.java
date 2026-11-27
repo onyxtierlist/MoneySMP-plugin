@@ -80,7 +80,6 @@ public final class JobsManager {
         String configured = plugin.getConfig().getString(path, "0.00");
         long cents = parseCents(configured);
         if (cents <= 0L) return;
-        cents = economy.applyRewardMultiplier(cents);
         if (economy.deposit(player.getUniqueId(), cents)) {
             player.sendMessage("§a+" + "$" + EconomyManager.format(cents) + " §7(" + title(job) + ")");
         }

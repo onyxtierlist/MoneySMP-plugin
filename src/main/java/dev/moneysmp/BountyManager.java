@@ -90,8 +90,9 @@ public final class BountyManager {
             if (!target.getUniqueId().toString().equals(data.getString(path + ".target"))) continue;
             if (killer.getUniqueId().toString().equals(data.getString(path + ".owner"))) continue;
             long amount = data.getLong(path + ".amount", -1L);
-            if (amount <= 0L || !economy.deposit(killer.getUniqueId(), amount)) continue;
-            total = total > Long.MAX_VALUE - amount ? Long.MAX_VALUE : total + amount;
+            long payout = economy.applyRewardMultiplier(amount);
+            if (amount <= 0L || !economy.deposit(killer.getUniqueId(), payout)) continue;
+            total = total > Long.MAX_VALUE - payout ? Long.MAX_VALUE : total + payout;
             count++;
             data.set(path, null);
         }

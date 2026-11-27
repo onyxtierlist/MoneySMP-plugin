@@ -58,3 +58,9 @@ control-points:
 
 ctf:
   score-to-win: 3
+
+
+random-events:
+  automatic: false
+  interval-minutes: 120
+  duration-seconds: 120

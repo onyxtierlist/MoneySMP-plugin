@@ -38,7 +38,7 @@ public final class RandomEventCommand implements CommandExecutor, TabCompleter {
             return true;
         }
         if (args[0].equalsIgnoreCase("list")) {
-            sender.sendMessage("§dEvents: §fslippery, healthy, anonymous, double_dough, ultra_hardcore, shieldless, shopping_spree");
+            sender.sendMessage("§dEvents: §f" + String.join(", ", events.getEventNames()));
             return true;
         }
         sender.sendMessage("§cUsage: /randomevent <status|list|start <event> [seconds]|stop>");
