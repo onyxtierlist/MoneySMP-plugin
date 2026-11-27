@@ -68,4 +68,4 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - All money amounts are in cents internally.
 
 ## Build
-Run `mvn clean package`. Output: `target/money-smp-1.4.0.jar`.
+Run `mvn clean package`. Output: `target/money-smp-1.5.0.jar`.

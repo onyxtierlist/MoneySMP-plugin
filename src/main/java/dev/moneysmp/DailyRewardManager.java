@@ -39,13 +39,14 @@ public final class DailyRewardManager {
             player.sendMessage("§cThe daily reward is not configured correctly. Contact an administrator.");
             return;
         }
-        if (!economy.deposit(id, rewardCents)) {
+        long actualReward = economy.applyRewardMultiplier(rewardCents);
+        if (!economy.deposit(id, actualReward)) {
             player.sendMessage("§cCould not deposit your daily reward. Please contact an administrator.");
             return;
         }
         data.set(id.toString(), now);
         save();
-        player.sendMessage("§aDaily reward claimed: §6$" + EconomyManager.format(rewardCents) + "§a!");
+        player.sendMessage("§aDaily reward claimed: §6$" + EconomyManager.format(actualReward) + "§a!");
     }
 
     public void status(Player player) {

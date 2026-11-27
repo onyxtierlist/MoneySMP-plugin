@@ -17,6 +17,7 @@ public final class EconomyManager {
     private final File file;
     private final YamlConfiguration data;
     private final long startingBalanceCents;
+    private int rewardMultiplier = 1;
 
     public EconomyManager(JavaPlugin plugin) {
         this.plugin = plugin;
@@ -49,6 +50,16 @@ public final class EconomyManager {
     public synchronized boolean setBalance(UUID uuid, long amountCents) {
         if (amountCents < 0) return false;
         ensureAccount(uuid); data.set(uuid.toString(), amountCents); save(); return true;
+    }
+
+    public synchronized void setRewardMultiplier(int multiplier) {
+        rewardMultiplier = Math.max(1, multiplier);
+    }
+
+    public synchronized long applyRewardMultiplier(long amountCents) {
+        if (amountCents <= 0) return amountCents;
+        try { return Math.multiplyExact(amountCents, rewardMultiplier); }
+        catch (ArithmeticException exception) { return Long.MAX_VALUE; }
     }
 
     public synchronized boolean deposit(UUID uuid, long amountCents) {

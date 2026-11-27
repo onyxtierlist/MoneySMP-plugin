@@ -99,8 +99,28 @@ public final class MoneySMP extends JavaPlugin {
         getCommand("controlpoint").setTabCompleter(controlPoint);
         getServer().getScheduler().runTaskTimer(this, controlPoints::tick, 20L, 20L);
 
+        GladiatorManager gladiators = new GladiatorManager(this);
+        GladiatorCommand gladiator = new GladiatorCommand(gladiators);
+        if (getCommand("gladiator") == null) { disableForMissingCommand("gladiator"); return; }
+        getCommand("gladiator").setExecutor(gladiator);
+        getCommand("gladiator").setTabCompleter(gladiator);
+        getServer().getPluginManager().registerEvents(new GladiatorListener(gladiators), this);
+
+        NaturalDisasterManager disasters = new NaturalDisasterManager(this);
+        NaturalDisasterCommand disaster = new NaturalDisasterCommand(disasters);
+        if (getCommand("disaster") == null) { disableForMissingCommand("disaster"); return; }
+        getCommand("disaster").setExecutor(disaster);
+        getCommand("disaster").setTabCompleter(disaster);
+
+        RandomEventManager randomEvents = new RandomEventManager(this, economyManager);
+        RandomEventCommand randomEvent = new RandomEventCommand(randomEvents);
+        if (getCommand("randomevent") == null) { disableForMissingCommand("randomevent"); return; }
+        getCommand("randomevent").setExecutor(randomEvent);
+        getCommand("randomevent").setTabCompleter(randomEvent);
+        getServer().getPluginManager().registerEvents(randomEvents, this);
+
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(economyManager), this);
-        getLogger().info("MoneySMP enabled. Features 001-018 loaded.");
+        getLogger().info("MoneySMP enabled. Features 001-021 loaded.");
     }
 
     private void disableForMissingCommand(String command) {
