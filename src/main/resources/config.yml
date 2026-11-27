@@ -1,2 +1,10 @@
 # Starting balance assigned to a player's first join.
 starting-balance: 100.00
+
+# Shop prices are in dollars and support two decimal places.
+shop:
+  items:
+    DIAMOND: 250.00
+    IRON_INGOT: 25.00
+    GOLD_INGOT: 50.00
+    EMERALD: 100.00

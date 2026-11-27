@@ -1,11 +1,9 @@
 name: Build MoneySMP
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -23,5 +21,5 @@ jobs:
       - name: Upload plugin JAR
         uses: actions/upload-artifact@v4
         with:
-          name: MoneySMP-0.3.0
-          path: target/money-smp-0.3.0.jar
+          name: MoneySMP-0.4.0
+          path: target/money-smp-0.4.0.jar

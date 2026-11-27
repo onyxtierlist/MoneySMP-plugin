@@ -23,21 +23,35 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - Requires `moneysmp.admin`, granted to operators by default.
 - Changes are saved immediately and the affected player is notified.
 
+## Feature 004 — Item Shop
+- `/shop` opens a 27-slot inventory shop.
+- Click an item to buy one using your MoneySMP balance.
+- Prices are configurable in `plugins/MoneySMP/config.yml`.
+- Purchases are blocked if you cannot afford the item or have no inventory space.
+- Shop display items cannot be moved or taken from the menu.
+- This first milestone is a configurable server shop; player-run shops can follow later.
+
 ## Requirements
 - Paper 1.21.11
 - Java 21
 - Maven
 
 ## Build
-Run `mvn clean package` from the project root. The plugin JAR is created at `target/money-smp-0.3.0.jar`.
+Run `mvn clean package` from the project root. The plugin JAR is created at `target/money-smp-0.4.0.jar`.
 Copy the JAR into your server's `plugins` folder and restart the server.
 
 ## Configuration
 Edit `plugins/MoneySMP/config.yml`:
 ```yaml
 starting-balance: 100.00
+shop:
+  items:
+    DIAMOND: 250.00
+    IRON_INGOT: 25.00
+    GOLD_INGOT: 50.00
+    EMERALD: 100.00
 ```
-This value is only assigned to players who do not already have a saved balance.
+Add valid Bukkit material names under `shop.items`.
 
 ## Commands
 | Command | Description |
@@ -48,6 +62,7 @@ This value is only assigned to players who do not already have a saved balance.
 | `/eco give <player> <amount>` | Add money (operator permission) |
 | `/eco take <player> <amount>` | Remove money (operator permission) |
 | `/eco set <player> <amount>` | Set balance (operator permission) |
+| `/shop` | Open the item shop |
 
 Permissions: `moneysmp.balance` and `moneysmp.pay` default to everyone; `moneysmp.admin` defaults to operators.
 
