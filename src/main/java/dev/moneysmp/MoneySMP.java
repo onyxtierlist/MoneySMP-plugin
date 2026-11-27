@@ -70,8 +70,18 @@ public final class MoneySMP extends JavaPlugin {
         getCommand("bounty").setTabCompleter(bounty);
         getServer().getPluginManager().registerEvents(new BountyListener(bounties), this);
 
+        BankManager bank = new BankManager(this);
+        if (getCommand("bank") == null) { disableForMissingCommand("bank"); return; }
+        getCommand("bank").setExecutor(new BankCommand(economyManager, bank));
+
+        if (getCommand("baltop") == null) { disableForMissingCommand("baltop"); return; }
+        getCommand("baltop").setExecutor(new BaltopCommand(economyManager));
+
+        if (getCommand("sell") == null) { disableForMissingCommand("sell"); return; }
+        getCommand("sell").setExecutor(new SellCommand(this, economyManager));
+
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(economyManager), this);
-        getLogger().info("MoneySMP enabled. Features 001-012 loaded.");
+        getLogger().info("MoneySMP enabled. Features 001-015 loaded.");
     }
 
     private void disableForMissingCommand(String command) {

@@ -67,6 +67,21 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - `/bounty list` shows active bounties; `/bounty cancel <id>` refunds your own bounty.
 - Bounty records persist in `plugins/MoneySMP/bounties.yml`.
 
+## Feature 013 — Player Bank
+- `/bank balance` displays your bank and wallet balances.
+- `/bank deposit <amount>` moves money from your wallet into your bank.
+- `/bank withdraw <amount>` moves money back into your wallet.
+- Bank balances persist separately in `plugins/MoneySMP/bank.yml`.
+
+## Feature 014 — Balance Leaderboard
+- `/baltop` displays the ten richest recorded accounts.
+- Ranking uses stored UUID balances, including players who are offline.
+
+## Feature 015 — Item Selling
+- `/sell hand` sells the eligible item stack in your main hand.
+- `/sell all` sells all eligible items in your storage inventory.
+- Per-item prices are configurable under `sell.prices`; unlisted items cannot be sold.
+
 ## Commands
 | Command | Description |
 |---|---|
@@ -95,6 +110,12 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 | `/bounty place <player> <amount>` | Place a bounty |
 | `/bounty list` | List active bounties |
 | `/bounty cancel <id>` | Cancel your bounty |
+| `/bank [balance]` | View bank and wallet |
+| `/bank deposit <amount>` | Deposit into bank |
+| `/bank withdraw <amount>` | Withdraw from bank |
+| `/baltop` | View richest players |
+| `/sell hand` | Sell held stack |
+| `/sell all` | Sell all eligible inventory items |
 
 ## Requirements
 - Paper 1.21.11
@@ -102,4 +123,4 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - Maven
 
 ## Build
-Run `mvn clean package`. The plugin JAR is `target/money-smp-1.2.0.jar`. Copy it into the server's `plugins` folder and restart.
+Run `mvn clean package`. The plugin JAR is `target/money-smp-1.3.0.jar`. Copy it into the server's `plugins` folder and restart.

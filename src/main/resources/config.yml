@@ -32,3 +32,20 @@ jobs:
 # Bounty minimum is stored in cents ($1.00 = 100).
 bounty:
   minimum-cents: 100
+
+# /sell prices are paid per item. Items not listed here cannot be sold.
+sell:
+  prices:
+    DIAMOND: "12.00"
+    IRON_INGOT: "1.00"
+    GOLD_INGOT: "2.00"
+    EMERALD: "5.00"
+    COAL: "0.25"
+    REDSTONE: "0.10"
+    LAPIS_LAZULI: "0.20"
+    COPPER_INGOT: "0.15"
+    WHEAT: "0.10"
+    CARROT: "0.10"
+    POTATO: "0.10"
+    OAK_LOG: "0.30"
+    SPRUCE_LOG: "0.30"
