@@ -2,125 +2,70 @@
 
 A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 
-## Feature 001 — Basic Economy
-- New players receive a configurable starting balance (default: $100.00).
-- `/money` displays the player's balance; `/bal` and `/balance` are aliases.
-- Balances are stored by UUID in `plugins/MoneySMP/balances.yml`.
-- Currency is stored as integer cents.
+## Implemented features
 
-## Feature 002 — Player Payments
-- `/pay <player> <amount>` pays an online player.
-- Supports up to two decimal places, blocks self-payments and insufficient funds.
+### 001 — Basic Economy
+- Configurable starting balance (default $100.00); `/money`, `/bal`, `/balance`.
+- UUID-based balances stored as integer cents.
 
-## Feature 003 — Admin Economy
-- `/eco give <player> <amount>`, `/eco take <player> <amount>`, and `/eco set <player> <amount>`.
-- Operator-only by default via `moneysmp.admin`.
+### 002 — Player Payments
+- `/pay <player> <amount>` transfers money to an online player.
 
-## Feature 004 — Server Item Shop
-- `/shop` opens the configurable server shop.
-- Click to buy one item; affordability and inventory space are checked.
+### 003 — Admin Economy
+- `/eco give|take|set <player> <amount>`; permission: `moneysmp.admin`.
 
-## Feature 005 — Player-Owned Chest Shops
-- Look at a chest while holding the item you want to sell and run `/pshop create <price>`.
-- Stock the chest manually. Other players right-click it to browse stock and buy one item.
-- Shop ownership and item prices persist in `plugins/MoneySMP/player-shops.yml`.
+### 004 — Server Item Shop
+- `/shop` opens the configurable purchase GUI.
 
-## Feature 006 — Shop Management
-- `/pshop price <price>` changes the price for the held item at your shop chest.
-- `/pshop remove` unregisters your shop without deleting its contents.
-- `/pshop list` lists your registered shops.
-- Registered shop chests are protected from breaking until removed.
+### 005–006 — Player Chest Shops
+- `/pshop create <price>`, `price`, `remove`, `list`; chest stock is player-managed and registered shops are protected.
 
-## Feature 007 — Auction House
-- `/ah` opens a GUI of active player listings.
-- `/ah sell <price> [amount]` lists the held item stack (price is the total listing price).
-- Clicking a listing purchases the entire listed stack.
-- Auction data and item stacks persist in `plugins/MoneySMP/auctions.yml`.
+### 007 & 009 — Auction House
+- `/ah`, `/ah sell <price> [amount]`, `/ah mine`, `/ah cancel <id>`; configurable listing cap and expiry.
 
-## Feature 008 — Player Trading
-- `/trade <player>` sends a trade request; the other player uses `/trade accept`.
-- Each player holds the item stack they want to exchange and uses `/trade offer`.
-- Both players use `/trade confirm` to complete the exchange.
-- `/trade cancel` returns escrowed items. Disconnecting cancels the active trade.
+### 008 — Player Trading
+- `/trade <player|accept|offer|confirm|cancel>`; item-stack escrow and disconnect cancellation.
 
-## Feature 009 — Auction Management
-- `/ah mine` lists your active auctions.
-- `/ah cancel <id>` cancels your own listing and returns its item.
-- Listings expire after the configured duration (default: 48 hours).
-- The per-player listing limit is configurable (default: 5).
+### 010 — Daily Rewards
+- `/daily claim`, `/daily status`; configurable 24-hour reward.
 
-## Feature 010 — Daily Rewards
-- `/daily claim` awards configurable money once every 24 hours.
-- `/daily status` displays the remaining cooldown.
-- Claim timestamps persist in `plugins/MoneySMP/daily-rewards.yml`.
+### 011 — Jobs
+- `/job join <miner|farmer|hunter|fisher>`, `/job leave`, `/job info`; activity rewards are configurable.
 
-## Feature 011 — Jobs
-- Choose one job with `/job join <miner|farmer|hunter|fisher>`.
-- Miners earn for breaking ores; farmers for harvesting mature crops; hunters for defeating hostile mobs; fishers for catching fish.
-- `/job leave` and `/job info` manage or inspect your job.
-- Rewards are configurable under `jobs.rewards` in config.yml; selected jobs persist in `plugins/MoneySMP/jobs.yml`.
+### 012 — Player Bounties
+- `/bounty place <player> <amount>`, `/bounty list`, `/bounty cancel <id>`; bounty escrow and PvP payout.
 
-## Feature 012 — Player Bounties
-- `/bounty place <player> <amount>` places a money bounty on an online player.
-- The bounty is escrowed from the creator's balance.
-- A different player who defeats the target in PvP receives the bounty.
-- `/bounty list` shows active bounties; `/bounty cancel <id>` refunds your own bounty.
-- Bounty records persist in `plugins/MoneySMP/bounties.yml`.
+### 013 — Player Bank
+- `/bank balance`, `/bank deposit <amount>`, `/bank withdraw <amount>`.
 
-## Feature 013 — Player Bank
-- `/bank balance` displays your bank and wallet balances.
-- `/bank deposit <amount>` moves money from your wallet into your bank.
-- `/bank withdraw <amount>` moves money back into your wallet.
-- Bank balances persist separately in `plugins/MoneySMP/bank.yml`.
+### 014 — Balance Leaderboard
+- `/baltop` lists the ten richest recorded accounts.
 
-## Feature 014 — Balance Leaderboard
-- `/baltop` displays the ten richest recorded accounts.
-- Ranking uses stored UUID balances, including players who are offline.
+### 015 — Item Selling
+- `/sell hand`, `/sell all`; prices configured under `sell.prices`.
 
-## Feature 015 — Item Selling
-- `/sell hand` sells the eligible item stack in your main hand.
-- `/sell all` sells all eligible items in your storage inventory.
-- Per-item prices are configurable under `sell.prices`; unlisted items cannot be sold.
+### 016 — Six-Team System and Team Treasury
+- Six configurable teams (Red, Blue, Green, Yellow, Purple, Orange by default).
+- `/team join <team>`, `/team leave`, `/team list`, `/team info [team]`.
+- `/team deposit <amount>` adds wallet funds to the team treasury.
+- The team leader can use `/team withdraw <amount>`; memberships, leaders and treasury balances persist in `teams.yml`.
 
-## Commands
-| Command | Description |
-|---|---|
-| `/money` | View balance |
-| `/pay <player> <amount>` | Pay an online player |
-| `/eco give|take|set <player> <amount>` | Admin economy |
-| `/shop` | Open server shop |
-| `/pshop create <price>` | Register the chest you're looking at |
-| `/pshop price <price>` | Set price for the held item |
-| `/pshop remove` | Remove your shop |
-| `/pshop list` | List your shops |
-| `/ah` | Open auction house |
-| `/ah sell <price> [amount]` | List held items |
-| `/ah mine` | View your listings |
-| `/ah cancel <id>` | Cancel your listing |
-| `/trade <player>` | Request a trade |
-| `/trade accept` | Accept a request |
-| `/trade offer` | Escrow your held stack |
-| `/trade confirm` | Confirm the item exchange |
-| `/trade cancel` | Cancel and return escrow |
-| `/daily claim` | Claim daily money |
-| `/daily status` | Check daily cooldown |
-| `/job join <job>` | Choose a job |
-| `/job leave` | Leave your job |
-| `/job info` | View current job |
-| `/bounty place <player> <amount>` | Place a bounty |
-| `/bounty list` | List active bounties |
-| `/bounty cancel <id>` | Cancel your bounty |
-| `/bank [balance]` | View bank and wallet |
-| `/bank deposit <amount>` | Deposit into bank |
-| `/bank withdraw <amount>` | Withdraw from bank |
-| `/baltop` | View richest players |
-| `/sell hand` | Sell held stack |
-| `/sell all` | Sell all eligible inventory items |
+### 017 — Player Tier Rankings
+- Tiers: S, A, B, C, D and F; players without an assigned tier are Unranked.
+- `/tier` shows your tier; `/tier list` shows assigned players.
+- Admins use `/tier set <player> <S|A|B|C|D|F|unranked>`.
 
-## Requirements
-- Paper 1.21.11
-- Java 21
-- Maven
+### 018 — Control Points
+- Admins set capture locations with `/controlpoint set <name>`.
+- Teams capture by holding the area uncontested for the configured number of seconds.
+- Owned points periodically pay configurable money into the team's treasury.
+- `/controlpoint list` and `/controlpoint status <name>` show ownership and capture progress.
+
+## Configuration
+- Paper 1.21.11 and Java 21 are required.
+- Team names: `teams.names`.
+- Control point values: `control-points.capture-seconds`, `radius`, `reward-cents`, `reward-interval-seconds`.
+- All money amounts are in cents internally.
 
 ## Build
-Run `mvn clean package`. The plugin JAR is `target/money-smp-1.3.0.jar`. Copy it into the server's `plugins` folder and restart.
+Run `mvn clean package`. Output: `target/money-smp-1.4.0.jar`.

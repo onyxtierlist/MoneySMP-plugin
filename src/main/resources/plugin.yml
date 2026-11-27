@@ -1,58 +1,27 @@
 name: MoneySMP
-version: 1.3.0
+version: 1.4.0
 main: dev.moneysmp.MoneySMP
 api-version: '1.21.11'
 author: Onyx Tier List
 description: A gradually expanding Money SMP plugin.
 commands:
-  money:
-    description: View your current balance.
-    usage: /money
-    aliases: [bal, balance]
-  pay:
-    description: Send money to another online player.
-    usage: /pay <player> <amount>
-  eco:
-    description: Manage a player's balance.
-    usage: /eco <give|take|set> <player> <amount>
-    permission: moneysmp.admin
-  shop:
-    description: Open the server item shop.
-    usage: /shop
-  pshop:
-    description: Create and manage player-owned chest shops.
-    usage: /pshop <create|price|remove|list>
-  ah:
-    description: Open and manage the auction house.
-    usage: /ah [sell|mine|cancel]
-  trade:
-    description: Trade item stacks with another online player.
-    usage: /trade <player|accept|offer|confirm|cancel>
-  daily:
-    description: Claim or check your daily money reward.
-    usage: /daily [claim|status]
-  job:
-    description: Choose a job and earn money from activities.
-    usage: /job <join|leave|info>
-  bounty:
-    description: Place and view player bounties.
-    usage: /bounty <place|list|cancel>
-  bank:
-    description: Deposit, withdraw, or check bank money.
-    usage: /bank [balance|deposit|withdraw] [amount]
-  baltop:
-    description: View the ten richest recorded players.
-    usage: /baltop
-  sell:
-    description: Sell configured items from your hand or inventory.
-    usage: /sell <hand|all>
+  money: {description: View your current balance., usage: /money, aliases: [bal, balance]}
+  pay: {description: Send money to another online player., usage: /pay <player> <amount>}
+  eco: {description: Manage a player's balance., usage: /eco <give|take|set> <player> <amount>, permission: moneysmp.admin}
+  shop: {description: Open the server item shop., usage: /shop}
+  pshop: {description: Create and manage player-owned chest shops., usage: /pshop <create|price|remove|list>}
+  ah: {description: Open and manage the auction house., usage: /ah [sell|mine|cancel]}
+  trade: {description: Trade item stacks with another online player., usage: /trade <player|accept|offer|confirm|cancel>}
+  daily: {description: Claim or check your daily money reward., usage: /daily [claim|status]}
+  job: {description: Choose a job and earn money from activities., usage: /job <join|leave|info>}
+  bounty: {description: Place and view player bounties., usage: /bounty <place|list|cancel>}
+  bank: {description: Deposit, withdraw, or check bank money., usage: /bank [balance|deposit|withdraw] [amount]}
+  baltop: {description: View the ten richest recorded players., usage: /baltop}
+  sell: {description: Sell configured items from your hand or inventory., usage: /sell <hand|all>}
+  team: {description: Join and manage a team treasury., usage: /team <list|join|leave|info|deposit|withdraw>}
+  tier: {description: View and manage player tiers., usage: /tier [list|set]}
+  controlpoint: {description: Manage and capture control points., usage: /controlpoint <list|set|status>}
 permissions:
-  moneysmp.balance:
-    description: Allows a player to view their balance.
-    default: true
-  moneysmp.pay:
-    description: Allows a player to send money to another player.
-    default: true
-  moneysmp.admin:
-    description: Allows access to administrative economy commands.
-    default: op
+  moneysmp.balance: {description: Allows a player to view their balance., default: true}
+  moneysmp.pay: {description: Allows a player to send money to another player., default: true}
+  moneysmp.admin: {description: Allows access to administrative economy and event commands., default: op}

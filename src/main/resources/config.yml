@@ -1,7 +1,6 @@
 # Starting balance assigned to a player's first join.
 starting-balance: 100.00
 
-# Server shop prices are in dollars and support two decimal places.
 shop:
   items:
     DIAMOND: 250.00
@@ -9,15 +8,12 @@ shop:
     GOLD_INGOT: 50.00
     EMERALD: 100.00
 
-# Auction house settings.
 auction:
   max-listings: 5
   duration-hours: 48
 
-# Daily reward amount. Players can claim once every 24 hours.
 daily-reward: "50.00"
 
-# Job rewards are paid per qualifying activity.
 jobs:
   rewards:
     miner:
@@ -29,11 +25,9 @@ jobs:
     fisher:
       fish: "2.50"
 
-# Bounty minimum is stored in cents ($1.00 = 100).
 bounty:
   minimum-cents: 100
 
-# /sell prices are paid per item. Items not listed here cannot be sold.
 sell:
   prices:
     DIAMOND: "12.00"
@@ -49,3 +43,14 @@ sell:
     POTATO: "0.10"
     OAK_LOG: "0.30"
     SPRUCE_LOG: "0.30"
+
+# Six fixed season teams. Edit names before players join.
+teams:
+  names: [Red, Blue, Green, Yellow, Purple, Orange]
+
+# Control point capture and team treasury income.
+control-points:
+  capture-seconds: 30
+  radius: 6
+  reward-cents: 2500
+  reward-interval-seconds: 300

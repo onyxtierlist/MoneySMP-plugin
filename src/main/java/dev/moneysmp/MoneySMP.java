@@ -80,8 +80,27 @@ public final class MoneySMP extends JavaPlugin {
         if (getCommand("sell") == null) { disableForMissingCommand("sell"); return; }
         getCommand("sell").setExecutor(new SellCommand(this, economyManager));
 
+        TeamManager teams = new TeamManager(this);
+        TeamCommand team = new TeamCommand(teams, economyManager);
+        if (getCommand("team") == null) { disableForMissingCommand("team"); return; }
+        getCommand("team").setExecutor(team);
+        getCommand("team").setTabCompleter(team);
+
+        TierManager tiers = new TierManager(this);
+        TierCommand tier = new TierCommand(tiers);
+        if (getCommand("tier") == null) { disableForMissingCommand("tier"); return; }
+        getCommand("tier").setExecutor(tier);
+        getCommand("tier").setTabCompleter(tier);
+
+        ControlPointManager controlPoints = new ControlPointManager(this, teams);
+        ControlPointCommand controlPoint = new ControlPointCommand(controlPoints);
+        if (getCommand("controlpoint") == null) { disableForMissingCommand("controlpoint"); return; }
+        getCommand("controlpoint").setExecutor(controlPoint);
+        getCommand("controlpoint").setTabCompleter(controlPoint);
+        getServer().getScheduler().runTaskTimer(this, controlPoints::tick, 20L, 20L);
+
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(economyManager), this);
-        getLogger().info("MoneySMP enabled. Features 001-015 loaded.");
+        getLogger().info("MoneySMP enabled. Features 001-018 loaded.");
     }
 
     private void disableForMissingCommand(String command) {
