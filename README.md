@@ -69,3 +69,11 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 
 ## Build
 Run `mvn clean package`. Output: `target/money-smp-1.5.0.jar`.
+
+
+### 022 — Capture the Flag
+- Admins configure each team's flag and base using `/ctf set <team> <flag|base>`.
+- `/ctf start` begins when at least two teams have both locations configured.
+- Players pick up an enemy flag by approaching it, then score by reaching their own base while their own flag is home.
+- `/ctf status` shows the score; `/ctf stop` ends the match. Flags return automatically when a carrier dies or disconnects.
+- First team to the configured score wins (`ctf.score-to-win`, default 3).

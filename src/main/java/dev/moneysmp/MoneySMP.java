@@ -119,8 +119,15 @@ public final class MoneySMP extends JavaPlugin {
         getCommand("randomevent").setTabCompleter(randomEvent);
         getServer().getPluginManager().registerEvents(randomEvents, this);
 
+        CtfManager ctf = new CtfManager(this, teams);
+        CtfCommand ctfCommand = new CtfCommand(ctf, teams);
+        if (getCommand("ctf") == null) { disableForMissingCommand("ctf"); return; }
+        getCommand("ctf").setExecutor(ctfCommand);
+        getCommand("ctf").setTabCompleter(ctfCommand);
+        getServer().getPluginManager().registerEvents(new CtfListener(ctf), this);
+
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(economyManager), this);
-        getLogger().info("MoneySMP enabled. Features 001-021 loaded.");
+        getLogger().info("MoneySMP enabled. Features 001-022 loaded.");
     }
 
     private void disableForMissingCommand(String command) {

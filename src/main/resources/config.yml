@@ -54,3 +54,7 @@ control-points:
   radius: 6
   reward-cents: 2500
   reward-interval-seconds: 300
+
+
+ctf:
+  score-to-win: 3
