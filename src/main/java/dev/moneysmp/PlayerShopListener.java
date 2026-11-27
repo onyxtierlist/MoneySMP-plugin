@@ -4,6 +4,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryDragEvent;
@@ -21,6 +22,17 @@ public final class PlayerShopListener implements Listener {
   event.setCancelled(true);
   shops.open(block,player);
  }
+ @EventHandler public void onBreak(BlockBreakEvent event){
+  Block block=event.getBlock();
+  if(!shops.isShop(block))return;
+  if(shops.isOwner(block,event.getPlayer().getUniqueId())){
+   event.setCancelled(true);
+   event.getPlayer().sendMessage("§eRemove your shop with /pshop remove before breaking this chest.");
+  }else{
+   event.setCancelled(true);
+   event.getPlayer().sendMessage("§cYou cannot break another player's shop chest.");
+  }
+ }
  @EventHandler public void onClick(InventoryClickEvent event){
   Inventory top=event.getView().getTopInventory();
   if(!(top.getHolder() instanceof PlayerShopHolder holder))return;
@@ -29,7 +41,6 @@ public final class PlayerShopListener implements Listener {
   ItemStack clicked=event.getCurrentItem();
   if(clicked==null||clicked.getType().isAir()||!(event.getWhoClicked() instanceof Player player))return;
   shops.buy(player,holder.getShopId(),clicked);
-  // Refresh the listing so stock changes are immediately visible.
   player.closeInventory();
  }
  @EventHandler public void onDrag(InventoryDragEvent event){
