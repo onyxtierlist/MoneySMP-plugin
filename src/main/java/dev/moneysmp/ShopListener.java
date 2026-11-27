@@ -12,8 +12,10 @@ public final class ShopListener implements Listener {
  @EventHandler public void onClick(InventoryClickEvent event){
   Inventory top=event.getView().getTopInventory();
   if(!(top.getHolder() instanceof ShopMenuHolder))return;
-  if(event.getClickedInventory()!=top)return;
+  // Cancel every inventory click while the shop is open to prevent shift-click,
+  // number-key, and double-click interactions from moving display items.
   event.setCancelled(true);
+  if(event.getClickedInventory()!=top)return;
   ItemStack clicked=event.getCurrentItem();
   if(clicked==null||clicked.getType().isAir()||!(event.getWhoClicked() instanceof Player player))return;
   shop.purchase(player,clicked.getType());

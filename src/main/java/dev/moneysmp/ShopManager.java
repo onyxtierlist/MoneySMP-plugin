@@ -55,7 +55,7 @@ public final class ShopManager {
   String path="shop.items."+type.name();
   if(!plugin.getConfig().contains(path)) return -1;
   try{return BigDecimal.valueOf(plugin.getConfig().getDouble(path)).setScale(2,RoundingMode.HALF_UP).movePointRight(2).longValueExact();}
-  catch(ArithmeticException ex){return -1;}
+  catch(RuntimeException ex){return -1;}
  }
  public void purchase(Player player,Material type){
   long price=getPriceCents(type);
