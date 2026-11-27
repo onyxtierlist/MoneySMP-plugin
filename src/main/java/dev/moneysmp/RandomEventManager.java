@@ -212,6 +212,7 @@ public final class RandomEventManager implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         if (active != null) {
             eventParticipants.add(event.getPlayer().getUniqueId());
+            snapshotPotionEffects(event.getPlayer());
             applyImmediateEffect(event.getPlayer());
         }
     }
