@@ -48,7 +48,7 @@ public final class RandomEventCommand implements CommandExecutor, TabCompleter {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         if (args.length == 1) return List.of("status", "list", "start", "stop");
-        if (args.length == 2 && args[0].equalsIgnoreCase("start")) return List.of("slippery", "healthy", "anonymous", "double_dough", "ultra_hardcore", "shieldless", "shopping_spree");
+        if (args.length == 2 && args[0].equalsIgnoreCase("start")) return events.getEventNames();
         return List.of();
     }
 }

@@ -35,6 +35,7 @@ public final class RandomEventManager implements Listener {
     private final Map<UUID, Map<PotionEffectType, PotionEffect>> originalPotionEffects = new HashMap<>();
     private EventType active;
     private int taskId = -1;
+    private long eventGeneration = 0L;
 
     public RandomEventManager(JavaPlugin plugin, EconomyManager economy) {
         this.plugin = plugin;
@@ -49,6 +50,7 @@ public final class RandomEventManager implements Listener {
     public synchronized boolean start(EventType event, int durationSeconds) {
         if (active != null || durationSeconds < 10) return false;
         active = event;
+        long generation = ++eventGeneration;
         eventParticipants.clear();
         for (Player player : Bukkit.getOnlinePlayers()) {
             eventParticipants.add(player.getUniqueId());
@@ -67,7 +69,11 @@ public final class RandomEventManager implements Listener {
             Bukkit.broadcastMessage("§aEveryone online received Hero of the Village for 20 minutes!");
         }
         taskId = Bukkit.getScheduler().scheduleSyncRepeatingTask(plugin, this::tick, 0L, 40L);
-        Bukkit.getScheduler().runTaskLater(plugin, this::stop, durationSeconds * 20L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
+            synchronized (RandomEventManager.this) {
+                if (active != null && eventGeneration == generation) stop();
+            }
+        }, durationSeconds * 20L);
         return true;
     }
 
@@ -82,6 +88,7 @@ public final class RandomEventManager implements Listener {
         if (active == null) return;
         EventType ended = active;
         active = null;
+        eventGeneration++;
         economy.setRewardMultiplier(1);
         if (taskId != -1) Bukkit.getScheduler().cancelTask(taskId);
         taskId = -1;
