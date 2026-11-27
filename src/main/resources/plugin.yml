@@ -1,5 +1,5 @@
 name: MoneySMP
-version: 0.6.0
+version: 0.9.0
 main: dev.moneysmp.MoneySMP
 api-version: '1.21.11'
 author: Onyx Tier List
@@ -22,6 +22,12 @@ commands:
   pshop:
     description: Create and manage player-owned chest shops.
     usage: /pshop <create|price|remove|list>
+  ah:
+    description: Open and manage the auction house.
+    usage: /ah [sell|mine|cancel]
+  trade:
+    description: Trade item stacks with another online player.
+    usage: /trade <player|accept|offer|confirm|cancel>
 permissions:
   moneysmp.balance:
     description: Allows a player to view their balance.

@@ -21,18 +21,55 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - Click to buy one item; affordability and inventory space are checked.
 
 ## Feature 005 — Player-Owned Chest Shops
-- Place a chest and look directly at it while holding the item you want to sell.
-- Run `/pshop create <price>` to register it as your shop.
-- Put stock into the chest. Other players right-click the chest to browse its stock.
-- Buyers click a listing to purchase one item. The item is removed from chest stock and payment goes to the owner.
+- Look at a chest while holding the item you want to sell and run `/pshop create <price>`.
+- Stock the chest manually. Other players right-click it to browse stock and buy one item.
 - Shop ownership and item prices persist in `plugins/MoneySMP/player-shops.yml`.
 
 ## Feature 006 — Shop Management
-- `/pshop price <price>` while looking at your shop chest and holding an item changes that item's price.
-- `/pshop remove` removes your shop registration but leaves the chest and its contents intact.
+- `/pshop price <price>` changes the price for the held item at your shop chest.
+- `/pshop remove` unregisters your shop without deleting its contents.
 - `/pshop list` lists your registered shops.
-- Only the owner can open the chest normally; other players receive the shop GUI.
-- Items without a configured price are visible but cannot be purchased.
+- Registered shop chests are protected from breaking until removed.
+
+## Feature 007 — Auction House
+- `/ah` opens a GUI of active player listings.
+- `/ah sell <price> [amount]` lists the held item stack (price is the total listing price).
+- Clicking a listing purchases the entire listed stack.
+- Auction data and item stacks persist in `plugins/MoneySMP/auctions.yml`.
+
+## Feature 008 — Player Trading
+- `/trade <player>` sends a trade request; the other player uses `/trade accept`.
+- Each player holds the item stack they want to exchange and uses `/trade offer`.
+- Both players use `/trade confirm` to complete the exchange.
+- `/trade cancel` returns escrowed items. Disconnecting cancels the active trade.
+
+## Feature 009 — Auction Management
+- `/ah mine` lists your active auctions.
+- `/ah cancel <id>` cancels your own listing and returns its item.
+- Listings expire after the configured duration (default: 48 hours).
+- The per-player listing limit is configurable (default: 5).
+- Settings are in `plugins/MoneySMP/config.yml` under `auction`.
+
+## Commands
+| Command | Description |
+|---|---|
+| `/money` | View balance |
+| `/pay <player> <amount>` | Pay an online player |
+| `/eco give|take|set <player> <amount>` | Admin economy |
+| `/shop` | Open server shop |
+| `/pshop create <price>` | Register the chest you're looking at |
+| `/pshop price <price>` | Set price for the held item |
+| `/pshop remove` | Remove your shop |
+| `/pshop list` | List your shops |
+| `/ah` | Open auction house |
+| `/ah sell <price> [amount]` | List held items |
+| `/ah mine` | View your listings |
+| `/ah cancel <id>` | Cancel your listing |
+| `/trade <player>` | Request a trade |
+| `/trade accept` | Accept a request |
+| `/trade offer` | Escrow your held stack |
+| `/trade confirm` | Confirm the item exchange |
+| `/trade cancel` | Cancel and return escrow |
 
 ## Requirements
 - Paper 1.21.11
@@ -40,18 +77,4 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - Maven
 
 ## Build
-Run `mvn clean package`. The plugin JAR is `target/money-smp-0.6.0.jar`. Copy it into the server's `plugins` folder and restart.
-
-## Commands
-| Command | Description |
-|---|---|
-| `/money` | View balance |
-| `/pay <player> <amount>` | Pay a player |
-| `/eco give|take|set <player> <amount>` | Admin economy |
-| `/shop` | Open server shop |
-| `/pshop create <price>` | Register the chest you're looking at |
-| `/pshop price <price>` | Set price for the item you're holding |
-| `/pshop remove` | Remove your shop |
-| `/pshop list` | List your shops |
-
-For player shops, the price is per item and uses dollars with up to two decimal places. Owners stock the chest manually.
+Run `mvn clean package`. The plugin JAR is `target/money-smp-0.9.0.jar`. Copy it into the server's `plugins` folder and restart.
