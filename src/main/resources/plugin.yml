@@ -1,5 +1,5 @@
 name: MoneySMP
-version: 0.4.0
+version: 0.6.0
 main: dev.moneysmp.MoneySMP
 api-version: '1.21.11'
 author: Onyx Tier List
@@ -17,8 +17,11 @@ commands:
     usage: /eco <give|take|set> <player> <amount>
     permission: moneysmp.admin
   shop:
-    description: Open the MoneySMP item shop.
+    description: Open the server item shop.
     usage: /shop
+  pshop:
+    description: Create and manage player-owned chest shops.
+    usage: /pshop <create|price|remove|list>
 permissions:
   moneysmp.balance:
     description: Allows a player to view their balance.

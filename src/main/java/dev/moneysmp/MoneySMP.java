@@ -17,8 +17,14 @@ public final class MoneySMP extends JavaPlugin {
   if(getCommand("shop")==null){getLogger().severe("Missing /shop in plugin.yml; disabling.");getServer().getPluginManager().disablePlugin(this);return;}
   getCommand("shop").setExecutor(new ShopCommand(shop));
   getServer().getPluginManager().registerEvents(new ShopListener(shop),this);
+  PlayerShopManager playerShops=new PlayerShopManager(this,economyManager);
+  PlayerShopCommand playerShopCommand=new PlayerShopCommand(playerShops);
+  if(getCommand("pshop")==null){getLogger().severe("Missing /pshop in plugin.yml; disabling.");getServer().getPluginManager().disablePlugin(this);return;}
+  getCommand("pshop").setExecutor(playerShopCommand);
+  getCommand("pshop").setTabCompleter(playerShopCommand);
+  getServer().getPluginManager().registerEvents(new PlayerShopListener(playerShops),this);
   getServer().getPluginManager().registerEvents(new PlayerJoinListener(economyManager),this);
-  getLogger().info("MoneySMP enabled. Features 001-004: Economy, Payments, Admin Economy, Shop.");
+  getLogger().info("MoneySMP enabled. Features 001-006: Economy, Payments, Admin Economy, Server Shop, Player Shops, Shop Management.");
  }
  @Override public void onDisable(){if(economyManager!=null)economyManager.save();}
 }

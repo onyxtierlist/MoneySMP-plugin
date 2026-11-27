@@ -6,30 +6,33 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - New players receive a configurable starting balance (default: $100.00).
 - `/money` displays the player's balance; `/bal` and `/balance` are aliases.
 - Balances are stored by UUID in `plugins/MoneySMP/balances.yml`.
-- Currency is stored as integer cents to avoid floating-point arithmetic for balances.
+- Currency is stored as integer cents.
 
 ## Feature 002 — Player Payments
-- `/pay <player> <amount>` sends money to another online player.
-- Player-name tab completion is available.
-- Payments must be greater than $0.00 and support up to two decimal places.
-- Players cannot pay themselves; the sender must have enough funds.
-- Both players receive a confirmation message. Transfers are atomic and saved immediately.
+- `/pay <player> <amount>` pays an online player.
+- Supports up to two decimal places, blocks self-payments and insufficient funds.
 
 ## Feature 003 — Admin Economy
-- `/eco give <player> <amount>` adds money.
-- `/eco take <player> <amount>` removes money, without allowing a negative balance.
-- `/eco set <player> <amount>` sets the exact balance; setting to $0.00 is allowed.
-- Admin commands currently target online players and include tab completion.
-- Requires `moneysmp.admin`, granted to operators by default.
-- Changes are saved immediately and the affected player is notified.
+- `/eco give <player> <amount>`, `/eco take <player> <amount>`, and `/eco set <player> <amount>`.
+- Operator-only by default via `moneysmp.admin`.
 
-## Feature 004 — Item Shop
-- `/shop` opens a 27-slot inventory shop.
-- Click an item to buy one using your MoneySMP balance.
-- Prices are configurable in `plugins/MoneySMP/config.yml`.
-- Purchases are blocked if you cannot afford the item or have no inventory space.
-- Shop display items cannot be moved or taken from the menu.
-- This first milestone is a configurable server shop; player-run shops can follow later.
+## Feature 004 — Server Item Shop
+- `/shop` opens the configurable server shop.
+- Click to buy one item; affordability and inventory space are checked.
+
+## Feature 005 — Player-Owned Chest Shops
+- Place a chest and look directly at it while holding the item you want to sell.
+- Run `/pshop create <price>` to register it as your shop.
+- Put stock into the chest. Other players right-click the chest to browse its stock.
+- Buyers click a listing to purchase one item. The item is removed from chest stock and payment goes to the owner.
+- Shop ownership and item prices persist in `plugins/MoneySMP/player-shops.yml`.
+
+## Feature 006 — Shop Management
+- `/pshop price <price>` while looking at your shop chest and holding an item changes that item's price.
+- `/pshop remove` removes your shop registration but leaves the chest and its contents intact.
+- `/pshop list` lists your registered shops.
+- Only the owner can open the chest normally; other players receive the shop GUI.
+- Items without a configured price are visible but cannot be purchased.
 
 ## Requirements
 - Paper 1.21.11
@@ -37,34 +40,18 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - Maven
 
 ## Build
-Run `mvn clean package` from the project root. The plugin JAR is created at `target/money-smp-0.4.0.jar`.
-Copy the JAR into your server's `plugins` folder and restart the server.
-
-## Configuration
-Edit `plugins/MoneySMP/config.yml`:
-```yaml
-starting-balance: 100.00
-shop:
-  items:
-    DIAMOND: 250.00
-    IRON_INGOT: 25.00
-    GOLD_INGOT: 50.00
-    EMERALD: 100.00
-```
-Add valid Bukkit material names under `shop.items`.
+Run `mvn clean package`. The plugin JAR is `target/money-smp-0.6.0.jar`. Copy it into the server's `plugins` folder and restart.
 
 ## Commands
 | Command | Description |
 |---|---|
-| `/money` | View your balance |
-| `/bal`, `/balance` | Aliases for `/money` |
-| `/pay <player> <amount>` | Pay an online player |
-| `/eco give <player> <amount>` | Add money (operator permission) |
-| `/eco take <player> <amount>` | Remove money (operator permission) |
-| `/eco set <player> <amount>` | Set balance (operator permission) |
-| `/shop` | Open the item shop |
+| `/money` | View balance |
+| `/pay <player> <amount>` | Pay a player |
+| `/eco give|take|set <player> <amount>` | Admin economy |
+| `/shop` | Open server shop |
+| `/pshop create <price>` | Register the chest you're looking at |
+| `/pshop price <price>` | Set price for the item you're holding |
+| `/pshop remove` | Remove your shop |
+| `/pshop list` | List your shops |
 
-Permissions: `moneysmp.balance` and `moneysmp.pay` default to everyone; `moneysmp.admin` defaults to operators.
-
-## Development approach
-Features are added in small milestones. Each milestone should be built and tested on a Paper 1.21.11 server before the next feature is started.
+For player shops, the price is per item and uses dollars with up to two decimal places. Owners stock the chest manually.
