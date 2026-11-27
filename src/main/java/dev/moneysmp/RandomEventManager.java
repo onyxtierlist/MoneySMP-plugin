@@ -32,6 +32,7 @@ public final class RandomEventManager implements Listener {
     private final EconomyManager economy;
     private final Map<UUID, Double> originalMaxHealth = new HashMap<>();
     private final Set<UUID> eventParticipants = new HashSet<>();
+    private final Map<UUID, Map<PotionEffectType, PotionEffect>> originalPotionEffects = new HashMap<>();
     private EventType active;
     private int taskId = -1;
 
@@ -51,6 +52,7 @@ public final class RandomEventManager implements Listener {
         eventParticipants.clear();
         for (Player player : Bukkit.getOnlinePlayers()) {
             eventParticipants.add(player.getUniqueId());
+            snapshotPotionEffects(player);
             applyImmediateEffect(player);
         }
         Bukkit.broadcastMessage("§d[Random Event] §e" + event.name().replace('_', ' ') + " §fhas started!");
@@ -108,8 +110,26 @@ public final class RandomEventManager implements Listener {
         if (active == null) return;
         for (Player player : Bukkit.getOnlinePlayers()) {
             eventParticipants.add(player.getUniqueId());
+            snapshotPotionEffects(player);
             applyImmediateEffect(player);
         }
+    }
+
+    private void snapshotPotionEffects(Player player) {
+        UUID id = player.getUniqueId();
+        if (originalPotionEffects.containsKey(id)) return;
+        Map<PotionEffectType, PotionEffect> snapshot = new HashMap<>();
+        for (PotionEffectType type : eventPotionTypes()) {
+            PotionEffect existing = player.getPotionEffect(type);
+            if (existing != null) snapshot.put(type, existing);
+        }
+        originalPotionEffects.put(id, snapshot);
+    }
+
+    private List<PotionEffectType> eventPotionTypes() {
+        return List.of(PotionEffectType.SPEED, PotionEffectType.INVISIBILITY,
+                PotionEffectType.JUMP_BOOST, PotionEffectType.SLOWNESS,
+                PotionEffectType.HERO_OF_THE_VILLAGE);
     }
 
     private void applyImmediateEffect(Player player) {
@@ -143,9 +163,12 @@ public final class RandomEventManager implements Listener {
     }
 
     private void clearPlayerEffects(Player player) {
-        for (PotionEffectType type : List.of(PotionEffectType.SPEED, PotionEffectType.REGENERATION,
-                PotionEffectType.INVISIBILITY, PotionEffectType.JUMP_BOOST, PotionEffectType.SLOWNESS,
-                PotionEffectType.HERO_OF_THE_VILLAGE)) player.removePotionEffect(type);
+        for (PotionEffectType type : eventPotionTypes()) player.removePotionEffect(type);
+        Map<PotionEffectType, PotionEffect> snapshot = originalPotionEffects.remove(player.getUniqueId());
+        if (snapshot == null) return;
+        for (PotionEffect effect : snapshot.values()) {
+            if (effect.getDuration() > 0) player.addPotionEffect(effect, true);
+        }
     }
 
     @EventHandler
@@ -195,6 +218,8 @@ public final class RandomEventManager implements Listener {
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
+        clearPlayerEffects(event.getPlayer());
+        eventParticipants.remove(event.getPlayer().getUniqueId());
         Double original = originalMaxHealth.remove(event.getPlayer().getUniqueId());
         if (original != null) restoreMaxHealth(event.getPlayer(), original);
     }
