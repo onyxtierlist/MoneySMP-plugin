@@ -1,5 +1,5 @@
 name: MoneySMP
-version: 1.8.0
+version: 1.9.0
 main: dev.moneysmp.MoneySMP
 api-version: '1.21.11'
 author: Onyx Tier List
@@ -26,8 +26,8 @@ commands:
   randomevent: {description: Manage random server events., usage: /randomevent <list|start|stop|status>}
   ctf: {description: Manage the Capture the Flag team event., usage: /ctf <set|start|status|stop>}
   season: {description: View and manage season team points., usage: /season <top|points|award|set|reset>}
+  finale: {description: Manage the timed season finale., usage: /finale <status|results|start|stop>}
 permissions:
   moneysmp.balance: {description: Allows a player to view their balance., default: true}
   moneysmp.pay: {description: Allows a player to send money to another player., default: true}
   moneysmp.admin: {description: Allows access to administrative economy and event commands., default: op}
-

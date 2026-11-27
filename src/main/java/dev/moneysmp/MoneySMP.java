@@ -132,8 +132,14 @@ public final class MoneySMP extends JavaPlugin {
         getCommand("season").setExecutor(season);
         getCommand("season").setTabCompleter(season);
 
+        FinaleManager finaleManager = new FinaleManager(this, seasonPoints);
+        FinaleCommand finale = new FinaleCommand(finaleManager);
+        if (getCommand("finale") == null) { disableForMissingCommand("finale"); return; }
+        getCommand("finale").setExecutor(finale);
+        getCommand("finale").setTabCompleter(finale);
+
         getServer().getPluginManager().registerEvents(new PlayerJoinListener(economyManager), this);
-        getLogger().info("MoneySMP enabled. Features 001-024 loaded.");
+        getLogger().info("MoneySMP enabled. Features 001-025 loaded.");
     }
 
     private void disableForMissingCommand(String command) {
