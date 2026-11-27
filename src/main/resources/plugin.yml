@@ -1,5 +1,5 @@
 name: MoneySMP
-version: 1.7.0
+version: 1.8.0
 main: dev.moneysmp.MoneySMP
 api-version: '1.21.11'
 author: Onyx Tier List
@@ -21,7 +21,13 @@ commands:
   team: {description: Join and manage a team treasury., usage: /team <list|join|leave|info|deposit|withdraw>}
   tier: {description: View and manage player tiers., usage: /tier [list|set]}
   controlpoint: {description: Manage and capture control points., usage: /controlpoint <list|set|status>}
+  gladiator: {description: Manage configured arena challenges., usage: /gladiator <set|challenge|accept|leave>}
+  disaster: {description: Start and manage non-terrain-destroying natural disasters., usage: /disaster <start|stop|status>}
+  randomevent: {description: Manage random server events., usage: /randomevent <list|start|stop|status>}
+  ctf: {description: Manage the Capture the Flag team event., usage: /ctf <set|start|status|stop>}
+  season: {description: View and manage season team points., usage: /season <top|points|award|set|reset>}
 permissions:
   moneysmp.balance: {description: Allows a player to view their balance., default: true}
   moneysmp.pay: {description: Allows a player to send money to another player., default: true}
   moneysmp.admin: {description: Allows access to administrative economy and event commands., default: op}
+

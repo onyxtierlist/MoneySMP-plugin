@@ -31,6 +31,8 @@ A Paper 1.21.11 plugin inspired by Money SMP. Requires Java 21.
 22. **Capture the Flag** — configure locations with `/ctf set <team> <flag|base>`; use `/ctf start`, `/ctf status`, `/ctf stop`.
 23. **Automatic event rotation** — optionally start a random event on a configurable schedule.
 
+24. **Season team points** — `/season points`, `/season top`, admin `/season award <team> <points>`, `/season set <team> <points>`, `/season reset`. Team standings persist in `season-points.yml`.
+
 ## Random events implemented
 
 - **Slippery:** temporary speed and jump effects.
@@ -50,6 +52,8 @@ The Season 7 reference describes 17 random events, but the currently accessible 
 
 ## Configuration
 
+- `season-points.yml`: persistent team season standings.
+
 - `starting-balance`: first-join wallet amount.
 - `shop.items`: server shop prices.
 - `auction.max-listings`, `auction.duration-hours`: auction settings.
@@ -65,4 +69,4 @@ The Season 7 reference describes 17 random events, but the currently accessible 
 
 ## Build
 
-Run `mvn clean package`. Output: `target/money-smp-1.7.0.jar`.
+Run `mvn clean package`. Output: `target/money-smp-1.8.0.jar`.
