@@ -13,3 +13,22 @@ shop:
 auction:
   max-listings: 5
   duration-hours: 48
+
+# Daily reward amount. Players can claim once every 24 hours.
+daily-reward: "50.00"
+
+# Job rewards are paid per qualifying activity.
+jobs:
+  rewards:
+    miner:
+      ore: "2.00"
+    farmer:
+      crop: "1.00"
+    hunter:
+      mob: "3.00"
+    fisher:
+      fish: "2.50"
+
+# Bounty minimum is stored in cents ($1.00 = 100).
+bounty:
+  minimum-cents: 100

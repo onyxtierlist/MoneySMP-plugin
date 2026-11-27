@@ -48,7 +48,24 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - `/ah cancel <id>` cancels your own listing and returns its item.
 - Listings expire after the configured duration (default: 48 hours).
 - The per-player listing limit is configurable (default: 5).
-- Settings are in `plugins/MoneySMP/config.yml` under `auction`.
+
+## Feature 010 — Daily Rewards
+- `/daily claim` awards configurable money once every 24 hours.
+- `/daily status` displays the remaining cooldown.
+- Claim timestamps persist in `plugins/MoneySMP/daily-rewards.yml`.
+
+## Feature 011 — Jobs
+- Choose one job with `/job join <miner|farmer|hunter|fisher>`.
+- Miners earn for breaking ores; farmers for harvesting mature crops; hunters for defeating hostile mobs; fishers for catching fish.
+- `/job leave` and `/job info` manage or inspect your job.
+- Rewards are configurable under `jobs.rewards` in config.yml; selected jobs persist in `plugins/MoneySMP/jobs.yml`.
+
+## Feature 012 — Player Bounties
+- `/bounty place <player> <amount>` places a money bounty on an online player.
+- The bounty is escrowed from the creator's balance.
+- A different player who defeats the target in PvP receives the bounty.
+- `/bounty list` shows active bounties; `/bounty cancel <id>` refunds your own bounty.
+- Bounty records persist in `plugins/MoneySMP/bounties.yml`.
 
 ## Commands
 | Command | Description |
@@ -70,6 +87,14 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 | `/trade offer` | Escrow your held stack |
 | `/trade confirm` | Confirm the item exchange |
 | `/trade cancel` | Cancel and return escrow |
+| `/daily claim` | Claim daily money |
+| `/daily status` | Check daily cooldown |
+| `/job join <job>` | Choose a job |
+| `/job leave` | Leave your job |
+| `/job info` | View current job |
+| `/bounty place <player> <amount>` | Place a bounty |
+| `/bounty list` | List active bounties |
+| `/bounty cancel <id>` | Cancel your bounty |
 
 ## Requirements
 - Paper 1.21.11
@@ -77,4 +102,4 @@ A gradually expanding Money SMP plugin for **Paper 1.21.11**.
 - Maven
 
 ## Build
-Run `mvn clean package`. The plugin JAR is `target/money-smp-0.9.0.jar`. Copy it into the server's `plugins` folder and restart.
+Run `mvn clean package`. The plugin JAR is `target/money-smp-1.2.0.jar`. Copy it into the server's `plugins` folder and restart.
